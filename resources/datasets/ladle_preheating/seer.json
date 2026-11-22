@@ -1,0 +1,43 @@
+{
+  "sampling_minutes": 5,
+  "observed": [
+    "煤气阀门开度",
+    "煤气流量",
+    "煤气压力",
+    "空气阀门开度",
+    "空气流量",
+    "空气压力",
+    "燃烧效率指标",
+    "温度"
+  ],
+  "reader_lags": 8,
+  "prior": {
+    "max_lag": 6,
+    "smoothing_steps": [
+      1,
+      2,
+      4
+    ],
+    "spread_steps": [
+      2,
+      3,
+      5
+    ],
+    "hold_steps": [
+      2,
+      3,
+      6
+    ],
+    "hold_probability": 0.25,
+    "self_source_probability": 0.4,
+    "noise_fraction": [
+      0.0,
+      0.05
+    ],
+    "gain_perturbation": 0.2,
+    "min_departure": 0.1
+  },
+  "event": {
+    "warmup": 36
+  }
+}

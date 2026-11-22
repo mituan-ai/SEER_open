@@ -1,0 +1,46 @@
+{
+  "sampling_minutes": 12,
+  "observed": [
+    "base",
+    "cooling_water",
+    "do2",
+    "volume",
+    "weight",
+    "ph",
+    "temp",
+    "co2_out",
+    "our",
+    "o2_out",
+    "cer"
+  ],
+  "reader_lags": 10,
+  "prior": {
+    "max_lag": 8,
+    "smoothing_steps": [
+      1,
+      3,
+      6
+    ],
+    "spread_steps": [
+      2,
+      4,
+      7
+    ],
+    "hold_steps": [
+      2,
+      5,
+      10
+    ],
+    "hold_probability": 0.25,
+    "self_source_probability": 0.4,
+    "noise_fraction": [
+      0.0,
+      0.05
+    ],
+    "gain_perturbation": 0.2,
+    "min_departure": 0.1
+  },
+  "event": {
+    "warmup": 60
+  }
+}

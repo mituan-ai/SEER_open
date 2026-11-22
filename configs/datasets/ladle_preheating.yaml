@@ -1,0 +1,19 @@
+# 钢包预热温度预测：60 步历史预测未来 5 步温度；整过程留出测试。
+name: ladle_preheating
+path: resources/datasets/ladle_preheating
+file: stream.npz               # 逐段流数据包；窗口在读取时切出
+split:
+  train:                       # 训练池（含验证过程）：32 个有效过程中留出 8 个测试过程之外的 24 个
+    column: process_name
+    values: [process_02, process_03, process_06, process_07, process_08, process_10, process_11, process_12, process_14, process_16, process_18, process_19, process_20, process_22, process_24, process_25, process_26, process_27, process_28, process_29, process_31, process_32, process_34, process_35]
+  validation:
+    column: process_name
+    values: [process_02, process_06, process_11, process_26, process_29]
+  test:                        # 按时间均匀取 8 个整过程
+    column: process_name
+    values: [process_04, process_09, process_13, process_17, process_21, process_23, process_30, process_33]
+eval_groups:
+  process: process_name
+artifacts: outputs/semantic_artifacts/ladle_preheating   # 语义卡编码产物，每个 (LLM, 编码器) 一个子目录
+priors: outputs/semantic_priors/ladle_preheating   # 合成语义先验描述池，每个 (LLM, 编码器) 一个子目录
+method: {prior_probability: 0.6}   # 验证集选定

@@ -1,0 +1,10 @@
+# SEER 在线修订。预热样本数 W 按数据集写在 resources/datasets/<dataset>/seer.json 的 event 下。
+llm: default               # 提案 LLM（configs/llm.yaml）
+budget: 5                  # K：每个事件至多 5 条候选，rho 均分
+risk: 0.05                 # 每个测试流的错误越界风险预算 epsilon；第 e 个事件分得 epsilon / (e (e + 1))，pi_e 由此反解
+threshold: 0.5             # tau；风险 pi (1 - tau) / ((1 - pi) tau)
+calibration_floor: 0.1     # c_min：原族校准方差乘子 c 的下界（标准化尺度），恒定记录下轮廓似然仍有限
+exact_floor: 1.0e-3       # 计算族噪声尺度的下界（标准化尺度，数值精度）；零族的重构下界取训练中的最小新息
+prior: {alpha: 2.0, beta: 1.0}   # 候选校准的正态–逆伽马先验（标准化尺度，Lambda = I，均值为增益 1、偏置 0）
+support_quantile: 0.001    # 支撑盒：训练段各变量的 [q, 1 - q] 分位
+cusum: {drift: 1.0, cap: 9.0, margin: 2.0}  # 单边 CUSUM 增量 min(z^2, cap) - 1 - drift；逐变量阈值 margin x 正常运行流（训练与验证）上原语义统计量的峰值

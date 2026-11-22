@@ -1,0 +1,13 @@
+# base：无语义的同一主干，只有目标头。
+# seer：语义读取层 + 主干 + 目标头 + 观测头，L = L_y + eta * L_x，训练中以概率 p 施加合成语义变化。
+#   语义卡与描述池取自数据集配置 artifacts / priors 下的 <llm>__<embedding> 子目录。
+base: {name: base}
+seer:
+  name: seer
+  llm: default              # 语义卡与描述池的生成器（configs/llm.yaml）
+  embedding: default        # 文本编码器（configs/embedding.yaml）
+  reader_heads: 4           # 读取头数 H
+  semantic_dim: 64          # 语义投影维度 m（双线性映射 U_l 的秩）
+  observation_weight: 1.0   # eta，各数据集统一
+  scale_floor: 0.1          # 观测头标准差下界 = scale_floor x 训练段标准化一步增量的标准差（逐变量）
+  prior_probability: 0.3    # p

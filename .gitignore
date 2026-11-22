@@ -1,0 +1,27 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+.env
+
+configs/env/*.local.env
+
+# 生成的语义与运行输出都不提交
+outputs/
+
+*.npy
+*.npz
+!resources/datasets/**/stream.npz
+*.parquet
+*.zip
+
+*.pt
+*.pth
+*.ckpt
+*.pkl
+
+*.log
+
+.vscode/

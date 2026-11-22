@@ -1,0 +1,13 @@
+# 浓密脱水底流浓度短时预测：30 分钟历史预测 10 分钟后的底流浓度。
+name: thickener_dewatering
+path: resources/datasets/thickener_dewatering
+file: stream.npz               # 逐段流数据包；窗口在读取时切出
+split:
+  train: {column: domain_bucket, values: [train]}
+  validation: {column: scenario_name, values: [train_jitter_6]}
+  test: {column: domain_bucket, values: [same_family]}
+eval_groups:
+  domain: domain_bucket
+  scenario: scenario_name
+artifacts: outputs/semantic_artifacts/thickener_dewatering   # 语义卡编码产物，每个 (LLM, 编码器) 一个子目录
+priors: outputs/semantic_priors/thickener_dewatering   # 合成语义先验描述池，每个 (LLM, 编码器) 一个子目录

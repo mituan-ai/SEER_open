@@ -1,0 +1,17 @@
+# 离线文本编码器登记表。default 用于编码语义卡与先验描述；可在 models 下登记其他编码器。
+# 地址与密钥取自 configs/env/api.local.env。
+# dimensions 为字段编码维度 k；固定为 256。
+# dimension_parameter 是各接口请求输出维度的字段名：
+#   openai_compatible: dimensions 或 output_dimension；google_generative_language: outputDimensionality；
+#   cohere_native: output_dimension。
+default: qwen3.7-text-embedding
+defaults:
+  provider: openai_compatible
+  dimension_parameter: dimensions
+  dimensions: 256
+  batch_size: 10
+  timeout_seconds: 120
+models:
+  qwen3.7-text-embedding:
+    base_url: "${SEER_EMBEDDING_BASE_URL}"
+    api_key_env: SEER_EMBEDDING_API_KEY

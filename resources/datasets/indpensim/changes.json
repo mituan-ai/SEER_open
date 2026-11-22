@@ -1,0 +1,68 @@
+{
+  "description": "未知观测语义变化测试集：在常规测试流上改写记录的生成方式，过程与目标不变。onsets 为变化起点在常规测试流（各测试段按顺序相接）中的位置比例；record 用导出尺度的列名书写，时间参数以分钟计，换算系数由训练段标定。带 control 的变化归入对照组（理由写在该字段），与漂移一起检验修订不造成损害。",
+  "onsets": [
+    0.0,
+    0.333
+  ],
+  "changes": [
+    {
+      "id": "co2_from_our",
+      "kind": "source",
+      "variable": "co2_out",
+      "note": "尾气 CO2 分析仪故障，记录改为由 OUR 按训练段标定的线性关系推算。",
+      "record": "0.66758 * our + 0.59659"
+    },
+    {
+      "id": "weight_shift_delay",
+      "kind": "alignment",
+      "variable": "weight",
+      "note": "称重数据改为按班次从批次记录补录，滞后 12 小时。",
+      "record": "lag(weight, 720)",
+      "control": "滞后 12 h 超出网络读取的时间窗：对照：检验修订不造成损害。"
+    },
+    {
+      "id": "co2_from_sugar",
+      "kind": "source",
+      "variable": "co2_out",
+      "note": "尾气 CO2 分析仪故障，记录改为由补糖速率与通气量按训练段标定的关系估算。",
+      "record": "0.00589729 * sugar_feed + 0.0241492 * aeration - 0.591247"
+    },
+    {
+      "id": "cer_from_sugar",
+      "kind": "source",
+      "variable": "cer",
+      "note": "CER 改为由补糖速率按训练段标定的碳平衡关系估算。",
+      "record": "0.0139033 * sugar_feed + 0.185755"
+    }
+  ],
+  "drifts": [
+    {
+      "id": "volume_bias",
+      "family": "in",
+      "variable": "volume",
+      "bias_std": 0.3
+    },
+    {
+      "id": "volume_gain",
+      "family": "in",
+      "variable": "volume",
+      "gain": 1.2
+    },
+    {
+      "id": "volume_gain_ramp",
+      "family": "out",
+      "variable": "volume",
+      "ramp_gain": 1.3
+    },
+    {
+      "id": "load_change",
+      "family": "out",
+      "scenarios": {
+        "column": "domain_bucket",
+        "values": [
+          "rhythm_condition"
+        ]
+      }
+    }
+  ]
+}
